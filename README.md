@@ -10,3 +10,5 @@ Create a messy overlay window to display infos on
 ### Todo
 Clean the test code 
 Define more the project and structure 
+
+Refer to the [project page](https://github.com/users/jeremie-j/projects/2)
