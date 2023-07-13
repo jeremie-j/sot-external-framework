@@ -1,27 +1,17 @@
-use winapi::{
-    shared::{minwindef::TRUE, windef::HWND},
-    um::winuser::{
-        GetWindowLongA, SendMessageA, SetLayeredWindowAttributes, SetWindowLongA, SetWindowPos,
-        GWL_EXSTYLE, HTCAPTION, HWND_TOPMOST, SC_MOVE, SWP_NOMOVE, SWP_NOSIZE, WM_SYSCOMMAND,
-        WS_EX_LAYERED, WS_EX_TRANSPARENT,
-    },
-};
-use winit::{
-    dpi::{PhysicalPosition, PhysicalSize},
-    event::{Event, MouseButton, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
-    platform::windows::WindowExtWindows,
-    window::{Fullscreen, WindowBuilder},
-};
+mod core;
+mod helpers;
 
-mod proc;
+use crate::core::MemoryReader;
+use crate::helpers::MemoryHelper;
 
 fn main() {
     // Create an event loop
     let event_loop = EventLoop::new();
-
     // Get the primary monitor for fullscreen
     let primary_monitor = event_loop.primary_monitor();
+
+    // Schedule a run of hello_world every 5 seconds
+    let mut counter = 0;
 
     // Create a transparent window
     let window = WindowBuilder::new()
@@ -44,9 +34,6 @@ fn main() {
         );
         SetLayeredWindowAttributes(hwnd, 0, 128, 2);
     }
-
-    let square_size = PhysicalSize::new(100, 100);
-    let mut is_dragging = false;
 
     // Main event loop
     event_loop.run(move |event, _, control_flow| {
